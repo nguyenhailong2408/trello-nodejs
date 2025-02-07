@@ -34,10 +34,20 @@ const START_SERVER = () => {
     res.end('<h1>Hello World!</h1><hr>')
   })
 
-  app.listen(env.APP_PORT, env.APP_HOST, () => {
-    // eslint-disable-next-line no-console
-    console.log(`Server's ${env.AUTHOR} running at http://${ env.APP_HOST }:${ env.APP_PORT }/`)
-  })
+  if (env.BUILD_MODE === 'production') {
+    // Môi trường production (render.com)
+    app.listen(process.env.PORT, () => {
+      // eslint-disable-next-line no-console
+      console.log(`Server's ${env.AUTHOR} running at port: ${ process.env.PORT }/`)
+    })
+  }
+  else {
+    //Môi trường dev
+    app.listen(env.LOCAL_DEV_APP_PORT, env.LOCAL_DEV_APP_HOST, () => {
+      // eslint-disable-next-line no-console
+      console.log(`Server's ${env.AUTHOR} running at http://${ env.LOCAL_DEV_APP_HOST }:${ env.LOCAL_DEV_APP_PORT }/`)
+    })
+  }
 
   //Thực hiện tác vụ cleanup khi đóng server lại
   exitHook(() => {
