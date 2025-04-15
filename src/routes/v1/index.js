@@ -1,8 +1,10 @@
 import express from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { boardRouter } from './boardRoute'
-import { columnRouter } from './columnRoute'
-import { cardRouter } from './cardRoute'
+import { boardRouter } from '~/routes/v1/boardRoute'
+import { columnRoute } from '~/routes/v1/columnRoute'
+import { cardRoute } from '~/routes/v1/cardRoute'
+import { userRoute } from '~/routes/v1/userRoute'
+import { invitationRoute } from '~/routes/v1/invitationRoute'
 
 const Router = express.Router()
 //Check APIs V1
@@ -13,9 +15,13 @@ Router.get('/status', (req, res) => {
 //Board APIs
 Router.use('/boards', boardRouter)
 //Column APIs
-Router.use('/columns', columnRouter)
+Router.use('/columns', columnRoute)
 //Card APIs
-Router.use('/cards', cardRouter)
+Router.use('/cards', cardRoute)
+//User APIs
+Router.use('/users', userRoute)
+//Invitation APIs
+Router.use('/invitations', invitationRoute)
 
 //Kiểu này phải import kiểu object destructuring
 export const APIs_V1 = Router
